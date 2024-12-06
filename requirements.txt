@@ -1,0 +1,6 @@
+pyfunctional
+numpy
+pandas
+scipy
+tqdm
+pyinterval
