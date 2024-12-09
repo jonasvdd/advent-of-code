@@ -31,11 +31,11 @@ for id in range(len(file_spaces)):
         free_spc = free_spaces[id]
         data_exp.extend([FREE_SPACE_VAL] * free_spc)
 data_exp = np.array(data_exp)
-print_data(np.asarray(data_exp))
+# print_data(np.asarray(data_exp))
 
 
 # ----------------- part 1 ---------------
-def all_free_space_at_the_end(d_exp: np.array):
+def all_free_space_at_the_end(d_exp: np.array) -> bool:
     where_mask = np.where(d_exp == FREE_SPACE_VAL)[0]
     if len(where_mask) == 0:
         return False
@@ -47,6 +47,7 @@ def all_free_space_at_the_end(d_exp: np.array):
 d_exp_mv = np.copy(data_exp)
 free_space_idxs = np.where(d_exp_mv == FREE_SPACE_VAL)[0]
 value_idxs = np.where(d_exp_mv != FREE_SPACE_VAL)[0]
+
 i = 0
 while not all_free_space_at_the_end(d_exp_mv):
     # swap the free space and value
@@ -55,12 +56,8 @@ while not all_free_space_at_the_end(d_exp_mv):
     i += 1
 
 
-non_free_space_mask = d_exp_mv != FREE_SPACE_VAL
-checksum = np.sum(
-    d_exp_mv[non_free_space_mask] * np.arange(d_exp_mv.shape[0])[non_free_space_mask]
-)
-
-
+file_mask = d_exp_mv != FREE_SPACE_VAL
+checksum = np.sum(d_exp_mv[file_mask] * np.arange(d_exp_mv.shape[0])[file_mask])
 print("Part 1:", checksum, "\t\tTime:", round(time.time() - t0, 4))
 
 
@@ -104,8 +101,6 @@ for idx in range(1, len(file_spaces)):
         # print_data(d_exp_mv2)
 
 
-non_free_space_mask = d_exp_mv2 != FREE_SPACE_VAL
-checksum = np.sum(
-    d_exp_mv2[non_free_space_mask] * np.arange(d_exp_mv.shape[0])[non_free_space_mask]
-)
+file_mask = d_exp_mv2 != FREE_SPACE_VAL
+checksum = np.sum(d_exp_mv2[file_mask] * np.arange(d_exp_mv.shape[0])[file_mask])
 print("Part 2:", checksum, "\t\tTime:", round(time.time() - t0, 4))
