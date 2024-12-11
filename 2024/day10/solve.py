@@ -59,13 +59,11 @@ def find_increasing_neighbors_vect(d: np.ndarray, current_yxs: np.array) -> np.a
 
 
 positions = np.argwhere(data == 0)
-# print("start positions", positions)
 path = [[(*sp.tolist(),)] for sp in positions]
-# for p in path:
-#     print(p)
 
 for i in range(9):
     prev_positions, next_positions = find_increasing_neighbors_vect(data, positions)
+    # convert to list of tuples
     prev_positions = [(*pp.tolist(),) for pp in prev_positions]
     next_positions = [(*np.tolist(),) for np in next_positions]
 
@@ -83,8 +81,10 @@ for i in range(9):
     # for p in path:
     # print("\t", p)
 
+# for the first part we need to find the unique trailheads
 trailhead_list = np.array([p[0] + p[-1] for p in path])
-# print(trailhead_list)
 
 print("part 1", len(np.unique(trailhead_list, axis=0)))
+
+# for part two, we need to know sum of the number of paths that end at each trailhead
 print("part 2", len(path))
