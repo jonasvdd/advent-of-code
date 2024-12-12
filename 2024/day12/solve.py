@@ -74,7 +74,7 @@ for plant_type in tqdm(np.unique(data)):
         for n1, n2 in zip(neighbor_1, neighbor_2):
             n1, n2 = (*n1.tolist(),), (*n2.tolist(),)
 
-            # added = False
+            added = False
             for s in pair_set_list:
                 if n1 in s or n2 in s:
                     s.update({n1, n2})
