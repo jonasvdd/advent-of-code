@@ -1,9 +1,7 @@
 import numpy as np
 import time
 import scipy.linalg
-from tqdm.auto import tqdm
 from typing import List, Tuple
-from itertools import product
 import scipy
 
 # data = open("input_old").readlines()
@@ -38,7 +36,6 @@ cost_B = 1
 
 def find_combinations_target(d1, d2, target) -> List[Tuple]:
     mx, mn = max(d1, d2), min(d1, d2)
-
     # mx * x + mn * y = target
     # y = (target - mx * x) / mn
     sol = []
@@ -81,20 +78,23 @@ def get_numpy_int_mask(arr: np.array) -> np.array:
 
 
 def find_combinations_target_linalg(dx_a, dx_b, targetx, dy_a, dy_b, targety):
-    # fmt: off
-    A = np.array([[dx_a, dx_b],
-                  [dy_a, dy_b]]
+    A = np.array(
+        [
+            [dx_a, dx_b],
+            [dy_a, dy_b],
+        ]
     )
     b = np.array([targetx, targety])
 
     det = np.linalg.det(A)
-    if det == 0: # no solution or infinite solutions
+    if det == 0:  # no solution or infinite solutions
         return []
 
     solution = scipy.linalg.solve(A, b)  # , assume_a='pos')
     if not all(get_numpy_int_mask(np.round(solution, 3))):
         return []
     return [np.round(solution)]
+
 
 tot_tokens = 0
 for i, (target_x, target_y) in enumerate(zip(targets_x, targets_y)):
